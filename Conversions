@@ -1,0 +1,54 @@
+##Convert miles to kilometers
+
+miles = input("If you'd be so kind, please enter the number of miles you'd like to convert:")
+
+print("Thank you!")
+
+km = float(miles) * 1.61
+
+print("The distance that you input is equivalent to " + str(km) + " kilometers. Hopefully you have more than a bicycle!")
+
+
+##Return user BMI
+
+class bmi:
+    def __init__(self, height, weight):
+        self.height = height
+        self.weight = weight
+        self.userbmi = (703 * self.weight)/(self.height**2)
+
+print("If you don't mind, please enter your weight in pounds followed by your height in inches.")
+userw = input("Weight (lb):")
+userh = input("Height (in):")
+
+userbmi = bmi(float(userh), float(userw))
+userbmi = userbmi.userbmi
+userbmi = int(10 * userbmi)
+userbmi = float(userbmi / 10)
+print("\nThanks! Based on the information you gave, your BMI is " + str(userbmi))
+
+
+
+##Convert seconds to hours, minutes, seconds
+
+def ConvertSeconds(seconds):
+    s1 = seconds    
+    hours = int(s1/(60**2))
+    s2 = s1 % (60**2)
+    minutes = int(s2/60)
+    s3 = s2 % 60
+    print(str(s1) + " seconds is equal to " + str(hours) + " hours, " + str(minutes) + " minutes, and " + str(s3) + " seconds. \nThanks for choosing ConvertSeconds as your function of choice today.\n<3 " )
+ConvertSeconds(621560139)
+
+
+
+##Given crackers, marshmallows, and chocolate, how many s'mores can be made?
+
+def Smores(Crackers, Marshmallows, Chocolate):
+    propCrack = int(Crackers/2)
+    Marsh = int(Marshmallows)
+    propChoc = int(Chocolate/3)
+    return min(propCrack, Marsh, propChoc)
+           
+smore1 = Smores(99, 22, 33)
+smore2 = Smores(111,111,111)
