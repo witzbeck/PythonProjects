@@ -1,0 +1,51 @@
+def Collatz(n):
+    
+    ##necessary input
+    if n <= 0:
+        print("\nC'mon! I need a POSTIVE integer!\n")
+        Collatz(int(input(":")))
+    elif type(n) != int:
+        print("\nPositive. Whole. Number.\n")
+        Collatz((input(":")))
+    else:
+        print("\n" + str(n) + "? I can work with that.\n\n...\n")
+    
+    ##initials
+    i = n
+    j = 1
+    plist = [n]
+    
+    
+    ##cltz loop
+    while i > 1:
+        if i % 2 == 0:
+            if i/2 == 1:
+                k = 1
+            else:
+                k = int(i/2)
+            plist.insert(j,k)
+            j = j+1
+        else:
+            k = int(3*i + 1)
+            plist.insert(j,k)
+            j = j+1
+        if k != 1:
+            plist.insert(j,k)
+        else:
+            pass
+        j = j + 1
+        i = k
+        
+    print("\nPhew! That went on for " + str(len(plist)) + " iterations.\n\nHere's the list you asked for-\n\n" + str(plist))
+    
+##Simple test function    
+from numpy import random as rd
+
+
+def tR():
+    j = 1
+    while j <= 1000:
+        r = rd.randint(1000)
+        r = 1+r
+        Collatz(r)
+        j = j + 1
