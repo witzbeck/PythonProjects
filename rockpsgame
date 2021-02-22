@@ -1,0 +1,73 @@
+##Score tracker
+def score(ur_score,comp_score):
+    score = str(ur_score) + " - " + str(comp_score)
+
+    if ur_score == 3:
+        print("\nCongratulations, you win " + score + "!")
+    elif comp_score == 3:
+        print("\nDon't worry about it, it's just a game! Thumbot3000 wins " + score)
+
+    elif ur_score == comp_score:
+        print("\nA match for the ages! Series tied at " + score)
+    elif ur_score < comp_score:
+        print("\nHuman intelligence isn't looking so great! The score is " + score)
+    elif ur_score > comp_score:
+        print("\nThese circuits can't keep up! The score is " + score)
+
+##Function for testing scoring function
+def ts():
+    i = 0
+    j = 0
+    for i in range (0,4):
+        for j in range (0,4):
+            score(i,j)
+            j = j + 1
+        i = i + 1
+        
+##Rock, Paper, Scissors game        
+def rockpaperscissors():
+    import numpy as np
+    uscore = 0
+    cscore = 0
+    print("Ladies, gentlemen, and honored gender-nonconforming individuals- The moment you've all been waiting for is now here!\n\nIn one corner, measuring less than a kilobyte, our champion, Thumbot3000!\n\nDirectly opposing, a true underdog...\n")
+    user = input("uhh.. What's your name? ")
+    print("Of course, it's " + str(user) + "!\n")
+   
+    while uscore != 3 or cscore != 3:
+        uin = input("Please choose r/p/s ")
+        cin = np.random.randint(0,3)
+        if cin == 0:
+            cin = "r"
+        elif cin == 1:
+            cin = "p"
+        else:
+            cin = "s"
+        
+        print(user + " has chosen " + uin + ". From Thumbot, we have... " + cin + ".")
+        if uin == cin:
+            print("Tie!")
+        else:
+            if uin == "r":
+                if cin == "s":
+                    print("\nRock beats scissors!")
+                    uscore = uscore + 1
+                else:
+                    print("\nPaper beats rock!")
+                    cscore = cscore + 1
+            elif uin == "s":
+                if cin == "p":
+                    print("\Scissors beats paper!")
+                    uscore = uscore + 1
+                else:
+                    print("\nRock beats scissors!")
+                    cscore = cscore + 1
+            elif uin == "p":
+                if cin == "r":
+                    print("\nPaper beats rock!")
+                    uscore = uscore + 1
+                else:
+                    print("\nScissors beats paper!")
+                    cscore = cscore + 1    
+        score(uscore,cscore)
+        if uscore == 3 or cscore == 3:
+            break
