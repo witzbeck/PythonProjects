@@ -1,0 +1,67 @@
+##3 methods for displaying the Fibonacci sequence: two list methods & one resource-intensive recursive option
+
+def Fibonacci1(n):
+    f = [1,1]
+    i = -n
+    while i < 0:
+        x = 0
+        y = 0
+        z = 0
+        if i + 2 > 0:
+            return f[n-1]  
+        else:
+            x = f[n + i]
+            y = f[n + i + 1]
+            z = y + x
+            f.insert(n + i + 2, z)
+            i = i+1
+
+def Fibonacci2(n):
+    f = [1,1]
+    k = 0
+    for i in f:
+        f.append(f[k] + f[k+1])
+        if k == n:
+            return f[n-1]
+        else:
+            k = k+1
+
+def Fibonacci3(n):
+    if n == 1:
+        return 1
+    elif n == 2:
+        return 1
+    else:
+        return Fibonacci3(n-2)+Fibonacci3(n-1)
+    
+##Function for testing all three
+def testF():
+    j = 1
+    while j<=30:
+        print("\n\nWhen n = " + str(j) + ", Fibonacci1 = " + str(Fibonacci1(j)))
+        print("\nWhen n = " + str(j) + ", Fibonacci2 = " + str(Fibonacci2(j)))
+        print("\nWhen n = " + str(j) + ", Fibonacci3 = " + str(Fibonacci3(j)))
+        j = j+1
+
+##Print formal answer w/ correct conjugation of ordered n        
+def Fibonacci(n):        
+    if 10 < n < 14:
+        th = "th"
+    elif n % 10 == 2:
+        th = "nd"
+    elif n % 10 == 1:
+        th = "st"
+    elif n % 10 == 3:
+        th = "rd"
+    else:
+        th = "th"
+        
+    print("The " + str(n) + str(th) + " # in the Fibonacci sequence is " + str(F(n)) + ".")
+    
+    
+##Simple test function    
+def tF():
+    j = 1
+    while j <= 500:
+        Fibonacci(j)
+        j = j + 1
