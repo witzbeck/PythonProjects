@@ -1,0 +1,119 @@
+##Chi Squared test for independence
+
+import copy
+from scipy import stats as st
+
+testdata = [[20,10,10],
+        [10,30,20]]
+
+def k(data):
+    ##Input data ->
+    #Calls func to sum row/col
+    #Calls func to exp val table
+    #Calculates test statistic by comparing generated tables
+    #Calls scipy.stat for cdf for p value
+    #Checks Chi test validity
+    #Conducts hypothesis testing
+      
+    obtab = makesums(data)
+    extab = copy.deepcopy(obtab)
+    extab = expv(extab)
+    
+    print("Observed value table: \n" + str(obtab) + "\nExpected value table: \n" + str(extab))
+    
+    #compute c2 values
+    lenr = len(obtab[0])
+    lenc = len(obtab)
+    
+    kai_list = []
+    v = 0
+    i = 0
+    while i < lenc - 1:
+        j = 0
+        while j < lenr - 1:
+            kai = (obtab[i][j] - extab[i][j])**2 / extab[i][j]
+            kai_list.append(kai)
+            
+            ##Piggyback checking for [i,j] > 5 for valid hypothesis testing
+            if obtab[i][j] < 5:
+                v = v + 1
+            else:
+                pass
+            
+            j = j + 1
+        i = i + 1  
+
+    kais = sum(kai_list)
+    df = (lenr - 2)*(lenc - 2)
+    pval = 1 - st.chi2.cdf(kais,df)
+    print("\n\tValue of test statistic: " + str(kais) +
+          "\n\tDegrees of freedom: " + str(df) +
+          "\n\tAssociated p value: " + str(pval) + "\n")
+
+    ##Hypothesis testing
+    print("Hypothesis Testing:\n\tLet's assume that simple random sampling was used, and that these are in fact categorical variables.\n")
+    if v == 0:
+        print("\tNo observations are sub 5 occurences. Chi-Squared testing is valid.\n")
+    elif v == 1:
+        print("\t1 observation is sub 5 occurences. Chi-Squared testing is not ~technically~ valid.\nLet's proceed as if it were.\n")
+    else:
+        print("\t" + str(v) + " observations are sub 5 occurances. Chi-Squared testing is not ~technically~ valid.\nLet's proceed as if it were.\n")
+        
+    print("Null Hypothesis: The variables observed are independent.\nAlt Hypothesis: The variables observed are not independent.\n")
+        
+    alpha1 = .05
+    alpha2 = .01    
+    
+    if pval > alpha1:
+        print("\tAt the associated p value, the observed data are sufficiently likely to not reject the null hypothesis.\n")
+    elif pval > alpha2 and pval < alpha1:
+        print("\tAt the associated p value, the observed data are sufficiently unlikely to consider rejecting the null hypothesis in favor of the alternative.\n")
+    else:
+        print("\tAt the associated p value, the observed data are sufficiently unlikely to reject the null hypothesis in favor of the alternative.\n\tThese data may not be completely independent.")
+
+        
+def makesums(tbl):
+    ##Adds column and row to data of col/row sums
+    #Determine dimensions of table
+    lenr = len(tbl[0])
+    lenc = len(tbl)
+    
+    #Create list for column sums
+    jlist = [0]*(lenr+1)
+    
+    #Insert row sums
+    i = 0
+    while i < lenc:
+        tbl[i].insert(lenr,sum(tbl[i]))
+        i = i + 1
+    
+    #Compute column sums and append list
+    j = 0
+    while j <= lenr:
+        k = 0
+        while k < lenc:
+            jlist[j] = jlist[j] + tbl[k][j]
+            k = k + 1
+        j = j + 1  
+            
+    tbl.append(jlist)
+       
+    return tbl
+
+def expv(tbl):
+    ##Calculates expected values in all but summation row/col
+    #Copies and assesses len of input table
+    tbl = tbl.copy()    
+    lenr = len(tbl[0])
+    lenc = len(tbl)
+
+    #Computes and replaces observed values with expected values    
+    j = 0
+    while j < lenc - 1:
+        k = 0
+        while k < lenr - 1:
+            tbl[j][k] = (tbl[j][int(lenr-1)] * tbl[int(lenc-1)][k])/ (tbl[int(lenc-1)][int(lenr-1)])
+            k = k + 1
+        j = j + 1  
+
+    return tbl
